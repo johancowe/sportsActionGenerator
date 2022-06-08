@@ -1,2 +1,2 @@
 # sportsActionGenerator
-This is a generator of sports action messages. The sport of your choice can be choosen. The human subject can be 'he/she', random names or an array of given names 
+This is a generator of sports action messages. The sport of your choice can be choosen. The message can be subjectless, like "nice spike!!" or the enduser can pass an array of names which will be randomly assigned to the action messages
