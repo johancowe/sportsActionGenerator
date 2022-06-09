@@ -5,33 +5,40 @@ var data = require("./data.js");
 
 class SportsActionsGenerator {
 
-    constructor(sports, requestNamed, gender, names) {
+    constructor(sports, requestNamed, gender, newNameArray) {
 
         if (sports === 'volleyball') {
-            this._sports       = 'volleyball';
-            this._names        = data.volleyNames;
-            this._actions      = data.volleyActions;
-            this._efficiency   = data.efficiency;            
+            this._sports           = 'volleyball';
+            this._nameArray        = data.volleyNameArray;
+            this._actionArray      = data.volleyActionArray;
+            this._adjectiveArray   = data.efficiencyArray;            
         } else { 
-            console.log('This sport is not supported (yet) !');
+            const errorMessage = '<### INPUT PARM VALIDATION ERROR ###>   This sports is not supported (yet) !';
+            throw Error(errorMessage);
         };
 
-        if (requestNamed || !requestNamed) {
+        if (requestNamed === true || requestNamed === false) {
             this._requestNamed = requestNamed;
         } else { 
-            console.log('Please specify if you request names in your message with TRUE or FALSE');
+            const errorMessage = '<### INPUT PARM VALIDATION ERROR ###>   Please specify if you would like to have names in your message with the boolean value TRUE or FALSE !';
+            throw Error(errorMessage);
         };
 
         if (gender === 'M' || gender === 'F') {
             this._gender = gender;
         } else { 
-            console.log('Please pass the gender of your players as: M / F ');
+            const errorMessage = '<### INPUT PARM VALIDATION ERROR ###>   Please pass the gender of your players as: M / F !';
+            throw Error(errorMessage);            
         };
 
-        if (!requestNamed && (names.length > 0) ) { 
-            console.log('As you did not asked for named messages, there is no need to pass names in your last parameter');
-        } else if (requestNamed && (names.length > 0 )) {
-            this._names = names;
+        if (!Array.isArray(newNameArray)) {
+            const errorMessage = '<### INPUT PARM VALIDATION ERROR ###>   Please pass names as an array !';
+            throw Error(errorMessage);            
+        } else if (!requestNamed && (newNameArray.length > 0) ) { 
+            const errorMessage = '<### INPUT PARM VALIDATION ERROR ###>   Because you did not ask for named messages, there is no need to pass names in your last parameter !';
+            throw Error(errorMessage);            
+        } else if (requestNamed && (newNameArray.length > 0 )) {
+            this._nameArray = newNameArray;
         } // else use default names as already assigned during the sports assignment step
 
     };
@@ -42,23 +49,39 @@ class SportsActionsGenerator {
     
     get requestNamed() {
         return this._requestNamed;
-    }
+    };
 
     get gender() {
         return this._gender;
-    }
+    };
 
-    get names() {
-        return this._names;
-    }
+    get nameArray() {
+        return this._nameArray;
+    };
 
-    get actions() {
-        return this._actions;
-    }
+    get actionArray() {
+        return this._actionArray;
+    };
 
-    get efficiency() {
-        return this._efficiency
-    }
+    get adjectiveArray() {
+        return this._adjectiveArray
+    };
+
+    getRandomName() {
+        const randomNameId = Math.floor(Math.random() * this.nameArray.length);
+        return this.nameArray[randomNameId];
+    };
+
+    getRandomAction() {
+        const randomActionId = Math.floor(Math.random() * this.actionArray.length);
+        return this.actionArray[randomActionId];
+    };
+
+    getRandomAdjective() {
+        const randomAdjectiveId = Math.floor(Math.random() * this.adjectiveArray.length);
+        return this.adjectiveArray[randomAdjectiveId];
+
+    } 
 
     generateMessage() {
 
@@ -68,23 +91,22 @@ class SportsActionsGenerator {
         if (!this.requestNamed) {
             (this.gender === 'M')? actionMessage = 'He ' : actionMessage = 'She ';
         } else {
-            const randomNameId = Math.floor(Math.random() * this.names.length);
-            actionMessage = this.names[randomNameId] + ' ';
+            actionMessage = this.getRandomName() + ' ';
         }
 
         //assign action type
-        const randomActionId = Math.floor(Math.random() * this.actions.length);
-        actionMessage = actionMessage + this.actions[randomActionId] + ' ';
+        actionMessage = actionMessage + this.getRandomAction() + ' ';
 
-        //assign efficiency
-        const randomEfficiencyId = Math.floor(Math.random() * this.efficiency.length);
-        actionMessage = actionMessage + this.efficiency[randomEfficiencyId] + '!';
+        //assign efficiency / adjective
+        actionMessage = actionMessage + this.getRandomAdjective() + '!';
         
         return actionMessage;
     }
 
 }
 
+//------------------------ TESTERS --------------------------------------
 //const generator = new SportsActionsGenerator('volleyball',false,'M',[]);
 //console.log(generator.generateMessage());
+
 module.exports.SportsActionsGenerator = SportsActionsGenerator;
