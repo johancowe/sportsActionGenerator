@@ -10,8 +10,8 @@ try {
 
     //const generator = new classes.SportsActionsGenerator('volleyball',false,'M',[]);
     //const generator = new classes.SportsActionsGenerator('volleyball',false,'F',[]);
-    //const generator = new classes.SportsActionsGenerator('volleyball',true,'M',['Johan Cowe', 'Lars Cowe', 'Jimmy Cowe']);
-    const generator = new classes.SportsActionsGenerator('volleyball',true,'M',[]);
+    const generator = new classes.SportsActionsGenerator('volleyball',true,'M',['Johan Cowe', 'Lars Cowe', 'Jimmy Cowe']);
+    //const generator = new classes.SportsActionsGenerator('volleyball',true,'M',[]);
 
     //const generator = new classes.SportsActionsGenerator('basketball',false,'M',[]);
     //const generator = new classes.SportsActionsGenerator('volleyball', 'test','M',[]);
